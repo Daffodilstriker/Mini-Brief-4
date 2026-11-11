@@ -2,39 +2,416 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>THROUGH THE BEE'S EYES — RCA Mini Brief</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
-:root{color-scheme:dark;font-family:'DM Sans',Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:#080a1a;color:#f7f0d7;overflow:hidden}canvas{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:crosshair}#veil{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,rgba(1,1,16,.65) 100%);mix-blend-mode:multiply}#grain{position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:28px 38px;gap:15px;z-index:3}small,.eyebrow{font-size:10px;letter-spacing:.21em;text-transform:uppercase;font-weight:600;color:#e9dca8}header .wordmark{font-family:Georgia,serif;font-size:17px;letter-spacing:.08em}header .right{display:flex;align-items:center;gap:18px;font-size:10px;letter-spacing:.13em;color:#e8ddc2}.pill{background:rgba(7,11,28,.38);border:1px solid rgba(250,236,181,.35);border-radius:99px;padding:10px 14px;backdrop-filter:blur(10px)}.panel{position:fixed;top:24%;left:5%;max-width:360px;z-index:2;pointer-events:none;text-shadow:0 2px 16px #08091a}.panel h1{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(40px,5vw,76px);line-height:.99;letter-spacing:-.045em;margin:16px 0}.panel h1 em{color:#ffe39c}.panel p{font-size:13px;line-height:1.85;color:rgba(255,247,223,.83);max-width:280px}.panel .line{width:48px;border-top:1px solid #f3cd77;margin:24px 0}.controls{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:4;width:205px;padding:20px;border:1px solid #b5a77155;border-radius:5px;background:#070a1a91;backdrop-filter:blur(16px)}.controls label{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#d6c99f;display:block;margin:0 0 12px}.controls button{appearance:none;display:block;width:100%;text-align:left;cursor:pointer;background:transparent;color:#e8ddc7;border:1px solid #c9bd8a44;padding:12px 13px;margin-bottom:9px;font:12px 'DM Sans',sans-serif;transition:.2s}.controls button:hover,.controls button.active{border-color:#f5d18b;background:#f4d78b21;color:#ffe9af}.controls .hint{font-size:11px;line-height:1.7;color:#c5bdaf;margin-top:14px}.controls .key{display:inline-block;border:1px solid #b5a77175;border-radius:3px;padding:0px 5px;font-size:10px}footer{position:fixed;bottom:26px;left:38px;right:38px;z-index:3;display:flex;align-items:end;justify-content:space-between;gap:20px}footer .status{font-size:10px;line-height:1.9;letter-spacing:.11em;text-transform:uppercase;color:#e6dbba}footer .meter{width:230px;height:2px;background:#e7d7a74a;margin-top:11px}footer .fill{height:100%;width:0%;background:#ffe397;box-shadow:0 0 10px #ffdf74}footer .note{font-size:11px;color:#e6dbba;max-width:260px;text-align:right;line-height:1.6}.reticle{position:fixed;left:50%;top:51%;transform:translate(-50%,-50%);width:30px;height:30px;border:1px solid #fff5c45e;border-radius:50%;pointer-events:none;z-index:2}.reticle:before,.reticle:after{content:'';position:absolute;background:#ffe7a7a6}.reticle:before{width:1px;height:44px;left:14px;top:-8px}.reticle:after{height:1px;width:44px;top:14px;left:-8px}.flash{position:fixed;left:50%;bottom:16%;transform:translateX(-50%);z-index:4;color:#ffe6a1;font-family:Georgia,serif;font-size:20px;font-style:italic;text-shadow:0 0 20px #ffce6f;opacity:0;pointer-events:none;transition:opacity .4s}.flash.show{opacity:1}.mobile{display:none}@media(max-width:750px){header{padding:18px}header .right{display:none}.panel{left:22px;top:17%;max-width:245px}.panel h1{font-size:38px}.panel p{font-size:11px}.controls{right:15px;top:auto;bottom:84px;transform:none;width:180px;padding:12px}.controls button{padding:8px;font-size:11px}.controls .hint{font-size:10px;margin-top:3px}footer{bottom:12px;left:18px;right:18px}.note{display:none}.reticle{opacity:.5}.mobile{display:block}}
+:root{color-scheme:dark;font-family:'DM Sans',Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:#080a1a;color:#f7f0d7;overflow:hidden}canvas{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:crosshair;touch-action:none}#veil{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,rgba(1,1,16,.65) 100%);mix-blend-mode:multiply}#grain{position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:28px 38px;gap:15px;z-index:3}small,.eyebrow{font-size:10px;letter-spacing:.21em;text-transform:uppercase;font-weight:600;color:#e9dca8}header .wordmark{font-family:Georgia,serif;font-size:17px;letter-spacing:.08em}header .right{display:flex;align-items:center;gap:18px;font-size:10px;letter-spacing:.13em;color:#e8ddc2}.pill{background:rgba(7,11,28,.38);border:1px solid rgba(250,236,181,.35);border-radius:99px;padding:10px 14px;backdrop-filter:blur(10px)}.panel{position:fixed;top:24%;left:5%;max-width:360px;z-index:2;pointer-events:none;text-shadow:0 2px 16px #08091a}.panel h1{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(40px,5vw,76px);line-height:.99;letter-spacing:-.045em;margin:16px 0}.panel h1 em{color:#ffe39c}.panel p{font-size:13px;line-height:1.85;color:rgba(255,247,223,.83);max-width:280px}.panel .line{width:48px;border-top:1px solid #f3cd77;margin:24px 0}.controls{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:4;width:205px;padding:20px;border:1px solid #b5a77155;border-radius:5px;background:#070a1a91;backdrop-filter:blur(16px)}.controls label{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#d6c99f;display:block;margin:0 0 12px}.controls button{appearance:none;display:block;width:100%;text-align:left;cursor:pointer;background:transparent;color:#e8ddc7;border:1px solid #c9bd8a44;padding:12px 13px;margin-bottom:9px;font:12px 'DM Sans',sans-serif;transition:.2s}.controls button:hover,.controls button.active{border-color:#f5d18b;background:#f4d78b21;color:#ffe9af}.controls .hint{font-size:11px;line-height:1.7;color:#c5bdaf;margin-top:14px}.controls .key{display:inline-block;border:1px solid #b5a77175;border-radius:3px;padding:0px 5px;font-size:10px}footer{position:fixed;bottom:26px;left:38px;right:38px;z-index:3;display:flex;align-items:end;justify-content:space-between;gap:20px}footer .status{font-size:10px;line-height:1.9;letter-spacing:.11em;text-transform:uppercase;color:#e6dbba}footer .meter{width:230px;height:2px;background:#e7d7a74a;margin-top:11px}footer .fill{height:100%;width:0%;background:#ffe397;box-shadow:0 0 10px #ffdf74}footer .note{font-size:11px;color:#e6dbba;max-width:260px;text-align:right;line-height:1.6}.reticle{position:fixed;left:50%;top:52%;transform:translate(-50%,-50%);width:30px;height:30px;border:1px solid #fff5c45e;border-radius:50%;pointer-events:none;z-index:2}.reticle:before,.reticle:after{content:'';position:absolute;background:#ffe7a7a6}.reticle:before{width:1px;height:44px;left:14px;top:-8px}.reticle:after{height:1px;width:44px;top:14px;left:-8px}.flash{position:fixed;left:50%;bottom:16%;transform:translateX(-50%);z-index:4;color:#ffe6a1;font-family:Georgia,serif;width:max-content;max-width:calc(100vw - 36px);text-align:center;font-size:clamp(15px,2.3vw,20px);font-style:italic;text-shadow:0 0 20px #ffce6f;opacity:0;pointer-events:none;transition:opacity .4s}.flash.show{opacity:1}.mobile{display:none}@media(max-width:750px){header{padding:18px}header .right{display:none}.panel{left:22px;top:17%;max-width:245px}.panel h1{font-size:38px}.panel p{font-size:11px}.controls{right:15px;top:auto;bottom:84px;transform:none;width:180px;padding:12px}.controls button{padding:8px;font-size:11px}.controls .hint{font-size:10px;margin-top:3px}footer{bottom:12px;left:18px;right:18px}.note{display:none}.reticle{opacity:.5}.mobile{display:block}}
 </style></head>
 <body><canvas id="scene" aria-label="Interactive bee first-person flight simulation"></canvas><div id="veil"></div><div id="grain"></div>
 <header><div class="wordmark">OTHER <i>SENSES</i> <span style="color:#ecdca0;font-size:10px;margin-left:13px">/ 02</span></div><div class="right"><span>ROYAL COLLEGE OF ART · MINI BRIEF</span><span class="pill" id="modeLabel">BEE VISION · SIMULATION</span></div></header>
 <section class="panel"><div class="eyebrow">01 / A different way of seeing</div><h1>Through<br>the <em>Bee's</em><br>Eyes.</h1><div class="line"></div><p>What if flowers were not simply beautiful, but maps? Fly through the garden and discover the hidden patterns that guide a pollinator to nectar.</p></section>
-<section class="controls"><label>Perception mode</label><button id="bee" class="active">✦ &nbsp; Bee vision</button><button id="human">◯ &nbsp; Human vision</button><button id="compare">◐ &nbsp; Split comparison</button><label style="margin-top:21px">Interaction</label><button id="fly">→ &nbsp; Fly forward</button><button id="reset">↺ &nbsp; Restart journey</button><div class="hint">Scroll to fly · Move mouse to look<br><span class="key">W A S D</span> move up / left / down / right<br><span class="key">←</span> <span class="key">→</span> move sideways · <span class="key">↑</span> <span class="key">↓</span> fly<br><span class="key">SPACE</span> collect nectar<br><span class="key">1</span> / <span class="key">2</span> / <span class="key">3</span> change view</div></section>
-<div class="reticle"></div><div class="flash" id="message">Nectar found · +1</div><footer><div class="status">Flight progress <span id="progressText">00%</span><div class="meter"><div class="fill" id="progressFill"></div></div><span id="nectarText">NECTAR COLLECTED: 00</span></div><div class="note">Only some flowers reveal strong nectar guides; others fade into the background. An artistic simulation of bee colour perception. Not a literal recreation of bee eyesight.</div></footer>
+<section class="controls"><label>Perception mode</label><button id="bee" class="active">✦ &nbsp; Bee vision</button><button id="human">◯ &nbsp; Human vision</button><button id="compare">◐ &nbsp; Split comparison</button><label style="margin-top:21px">Interaction</label><button id="fly">→ &nbsp; Fly forward</button><button id="reset">↺ &nbsp; Restart journey</button><div class="hint"><span class="mobile">Swipe to fly · Tap to collect<br></span>Move mouse to steer · Scroll to glide<br><span class="key">W S</span> forward / back<br><span class="key">A D</span> strafe · <span class="key">Q E</span> descend / rise<br><span class="key">SPACE</span> collect nectar<br><span class="key">1</span> / <span class="key">2</span> / <span class="key">3</span> change view</div></section>
+<div class="reticle"></div><div class="flash" id="message" role="status">Nectar found · +1</div><footer><div class="status">Flight progress <span id="progressText">00%</span><div class="meter"><div class="fill" id="progressFill"></div></div><span id="nectarText">NECTAR COLLECTED: 00</span></div><div class="note">Only some flowers reveal strong nectar guides; others fade into the background. An artistic simulation of bee colour perception. Not a literal recreation of bee eyesight.</div></footer>
 <script>
 (() => {
-const c=document.querySelector('#scene'),ctx=c.getContext('2d',{alpha:false});let W=innerWidth,H=innerHeight,dpr=1,time=0,travel=0,targetTravel=0,mouseX=0,mouseY=0,mode='bee',nectar=0,auto=false,prev=0;const maxTravel=148;let flowers=[],dust=[],camX=0,camY=0,targetCamX=0,targetCamY=0;const held=new Set();
+const c=document.querySelector('#scene'),ctx=c.getContext('2d',{alpha:false});let W=innerWidth,H=innerHeight,dpr=1,time=0,travel=0,mode='bee',nectar=0,auto=false,prev=0;const maxTravel=148;let flowers=[],dust=[];const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');const held=new Set();
 function rnd(seed){let x=Math.sin(seed*128.167+78.237)*43758.5453;return x-Math.floor(x)}
-function init(){flowers=[];dust=[];for(let i=0;i<130;i++){let z=4+rnd(i+12)*155, side=(rnd(i+400)-.5)*2;let x=side*(1.8+rnd(i+600)*10.5),y=-.6-rnd(i+800)*1.35,sz=.25+rnd(i+900)*.65,phase=rnd(i+34)*6.28;flowers.push({x,y,z,sz,phase,petals:5+Math.floor(rnd(i+456)*3),col:rnd(i+100)<.5?0:1,featured:rnd(i+1917)<.19,seen:false})}for(let i=0;i<220;i++)dust.push({x:(rnd(i+22)-.5)*22,y:(rnd(i+222)-.5)*9,z:rnd(i+555)*170,s:rnd(i+213)*1.9+.2})}init();
+const species = [
+  {name:'English lavender', shape:'lavender', human:['#dbc2ff','#8353aa','#564472'], bee:['#a4c9ff','#5542a7','#322860'], size:.69, height:1.55},
+  {name:'Borage', shape:'borage', human:['#89d7ff','#3066bf','#272044'], bee:['#7df4ff','#216bab','#112952'], size:.60, height:1.18},
+  {name:'Common foxglove', shape:'foxglove', human:['#ffabd8','#ac4082','#6f285d'], bee:['#bcb8ff','#594187','#332447'], size:.84, height:2.02},
+  {name:'White clover', shape:'clover', human:['#fff4e3','#cbb8c4','#a28299'], bee:['#d7f4ff','#7b9fce','#456e89'], size:.46, height:.53},
+  {name:'Cornflower', shape:'cornflower', human:['#a0b2ff','#314ace','#272c75'], bee:['#a198ff','#373eae','#202568'], size:.68, height:1.34},
+  {name:'Wild thyme', shape:'thyme', human:['#ffd0e2','#ad658f','#754467'], bee:['#dfc2ff','#865eab','#4e376f'], size:.54, height:.60},
+  {name:'Garden cosmos', shape:'cosmos', human:['#ffb5d9','#ce508d','#e5ae3c'], bee:['#9eaff2','#504386','#4d665f'], size:.77, height:1.49},
+  {name:'Common sunflower', shape:'sunflower', human:['#ffe783','#df9230','#643721'], bee:['#e1ef92','#6a996c','#2a4848'], size:.96, height:2.19}
+];
+const TAU = Math.PI * 2;
+const sprites = new Map();
+
+function init(){
+  flowers = [];
+  dust = [];
+  // Repeat the full planting mix throughout the route, with specimens near the flight path.
+  for(let i=0;i<136;i++){
+    const plant = species[i % species.length];
+    const nearPath = i < 24;
+    const z = nearPath ? 5 + i*6 : 5 + rnd(i+12)*151;
+    const x = nearPath
+      ? (i%2 ? 1 : -1)*(.55+rnd(i+600)*.95)
+      : (rnd(i+400)-.5)*24;
+    const height = plant.height*(.82+rnd(i+800)*.36);
+    flowers.push({
+      plant, x, y:.74-height, z, height,
+      sz:plant.size*(.8+rnd(i+900)*.35), phase:rnd(i+34)*TAU,
+      featured:nearPath || rnd(i+1917)<.22, seen:false
+    });
+  }
+  flowers.sort((a,b)=>b.z-a.z);
+  for(let i=0;i<220;i++){
+    dust.push({x:(rnd(i+22)-.5)*22,y:(rnd(i+222)-.5)*9,z:rnd(i+555)*170,s:rnd(i+213)*1.9+.2});
+  }
+}
+init();
+
+function flowerHead(plant,isBee,featured){
+  const key = plant.shape + (isBee ? '-bee' : '-human') + (featured ? '-guide' : '');
+  if(sprites.has(key)) return sprites.get(key);
+
+  const sprite = document.createElement('canvas');
+  sprite.width = sprite.height = 288;
+  const ink = sprite.getContext('2d');
+  ink.translate(144,144);
+  ink.scale(60,60);
+  const [light,shade,core] = isBee ? plant.bee : plant.human;
+  const guide = isBee && featured;
+  const guideColor = '#dfff9b';
+
+  function oval(x,y,rx,ry,angle,color){
+    ink.fillStyle = color;
+    ink.beginPath();
+    ink.ellipse(x,y,rx,ry,angle,0,TAU);
+    ink.fill();
+  }
+
+  function rays(count,length,width,tip){
+    for(let i=0;i<count;i++){
+      ink.save();
+      ink.rotate(i*TAU/count);
+      const color = ink.createLinearGradient(0,-.15,0,-length);
+      color.addColorStop(0,shade);
+      color.addColorStop(.68,light);
+      color.addColorStop(1,light);
+      ink.fillStyle = color;
+      ink.beginPath();
+      ink.moveTo(0,-.10);
+      ink.bezierCurveTo(-width*.65,-length*.38,-width,-length*.83,-width*.66,-length*.92);
+      if(tip==='fringe'){
+        ink.lineTo(-width*.47,-length);
+        ink.lineTo(-width*.24,-length*.88);
+        ink.lineTo(0,-length*1.07);
+        ink.lineTo(width*.24,-length*.88);
+        ink.lineTo(width*.47,-length);
+        ink.lineTo(width*.66,-length*.92);
+      }else if(tip==='point'){
+        ink.lineTo(0,-length*1.15);
+        ink.lineTo(width*.66,-length*.92);
+      }else{
+        ink.quadraticCurveTo(0,-length*1.09,width*.66,-length*.92);
+      }
+      ink.bezierCurveTo(width,-length*.83,width*.65,-length*.38,0,-.10);
+      ink.fill();
+      if(guide){
+        ink.strokeStyle=guideColor;
+        ink.lineWidth=.024;
+        ink.shadowColor=guideColor;
+        ink.shadowBlur=5;
+        ink.beginPath();
+        ink.moveTo(0,-length*.26);
+        ink.quadraticCurveTo(-width*.18,-length*.49,0,-length*.69);
+        ink.stroke();
+        ink.shadowBlur=0;
+      }
+      ink.restore();
+    }
+  }
+
+  function disc(radius,count){
+    oval(0,0,radius,radius,0,core);
+    for(let i=0;i<count;i++){
+      const angle = i*2.399963;
+      const distance = radius*.88*Math.sqrt((i+.5)/count);
+      oval(Math.cos(angle)*distance,Math.sin(angle)*distance,.036,.026,angle,
+        guide && i%3===0 ? guideColor : i%2 ? light : shade);
+    }
+  }
+
+  switch(plant.shape){
+    case 'lavender':
+      oval(0,-.24,.048,1.12,0,shade);
+      for(let i=0;i<7;i++){
+        const y = .63-i*.29;
+        const width = .35-i*.032;
+        for(const side of [-1,1]){
+          oval(side*width*.64,y,width,.139,side*-.40,shade);
+          oval(side*width*.83,y-.068,width*.72,.085,side*-.40,light);
+          if(guide) oval(side*width*.53,y+.013,.06,.025,side*-.40,guideColor);
+        }
+      }
+      break;
+    case 'foxglove':
+      oval(0,-.27,.062,1.38,0,shade);
+      for(let i=6;i>=0;i--){
+        ink.save();
+        ink.translate((i%2 ? -.35 : .35)*(1-i*.07),.68-i*.34);
+        ink.rotate(i%2 ? .51 : -.51);
+        ink.scale(1-i*.078,1-i*.078);
+        ink.fillStyle=light;
+        ink.beginPath();
+        ink.moveTo(-.14,-.26);
+        ink.bezierCurveTo(-.34,-.08,-.27,.29,-.41,.43);
+        ink.quadraticCurveTo(0,.67,.41,.43);
+        ink.bezierCurveTo(.27,.29,.34,-.08,.14,-.26);
+        ink.quadraticCurveTo(0,-.34,-.14,-.26);
+        ink.fill();
+        oval(0,.42,.36,.158,0,shade);
+        oval(0,.416,.26,.092,0,core);
+        for(const dot of [-1,0,1]) oval(dot*.13,.43,.028,.025,0,guide ? guideColor : light);
+        ink.restore();
+      }
+      break;
+    case 'clover':
+      oval(0,0,.87,.69,0,shade);
+      for(let row=3;row>=0;row--){
+        const count = [5,7,8,7][row];
+        const width = [.99,1.44,1.60,1.32][row];
+        for(let i=0;i<count;i++){
+          const x = width*(i/(count-1)-.5);
+          const y = -.48+row*.29+Math.abs(x)*.18;
+          oval(x,y,.115,.227,-x*.79,shade);
+          oval(x-.021,y-.052,.084,.165,-x*.79,light);
+          if(guide && (row+i)%3===0) oval(x,y+.047,.024,.053,-x*.79,guideColor);
+        }
+      }
+      break;
+    case 'thyme':
+      for(const [x,y] of [[-.67,.13],[-.35,-.35],[.15,-.47],[.55,-.17],[.68,.30],[-.18,.32]]){
+        ink.save();
+        ink.translate(x,y);
+        ink.scale(.32,.32);
+        rays(5,1.04,.34,'round');
+        oval(0,0,.17,.17,0,guide ? guideColor : core);
+        ink.restore();
+      }
+      break;
+    case 'borage':
+      rays(5,1.12,.31,'point');
+      oval(0,0,.28,.28,0,core);
+      for(let i=0;i<5;i++){
+        const angle = i*TAU/5;
+        oval(Math.sin(angle)*.26,-Math.cos(angle)*.26,.055,.115,angle,guide ? guideColor : '#dce8ef');
+      }
+      oval(0,0,.105,.105,0,'#25213c');
+      break;
+    case 'cornflower':
+      rays(10,1.04,.28,'fringe');
+      disc(.31,26);
+      break;
+    case 'cosmos':
+      rays(8,1.22,.39,'round');
+      disc(.25,20);
+      break;
+    case 'sunflower':
+      rays(19,1.47,.21,'point');
+      disc(.66,104);
+      break;
+  }
+
+  sprites.set(key,sprite);
+  return sprite;
+}
+
+function flower(f,isBee){
+  const sway = Math.sin(time*.7+f.phase)*.08;
+  const p = project(f.x,f.y+sway,f.z);
+  if(!p) return;
+  const r = p.s*f.sz;
+  const stem = p.s*f.height;
+  const {x,y} = p;
+  if(r<.5 || r>H*2 || x+r*2<0 || x-r*2>W || y+r*2+stem<0 || y-r*2>H) return;
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.rotate(flight.bank);
+  ctx.translate(-x,-y);
+  ctx.globalAlpha = Math.min(.96,p.depth/5)*(f.featured ? 1 : isBee ? .52 : .73);
+  ctx.strokeStyle = isBee ? '#467e83' : '#577e4f';
+  ctx.lineWidth = Math.max(.7,r*.073);
+  ctx.beginPath();
+  ctx.moveTo(x,y);
+  ctx.quadraticCurveTo(x+r*.36,y+stem*.59,x,y+stem);
+  ctx.stroke();
+
+  ctx.fillStyle = isBee ? '#3a6d75' : '#4c784c';
+  for(const side of [-1,1]){
+    const base = y+stem*(side<0 ? .62 : .79);
+    const reach = r*(f.plant.shape==='sunflower' ? .84 : .52);
+    ctx.beginPath();
+    ctx.moveTo(x,base);
+    ctx.quadraticCurveTo(x+side*reach*.23,base-reach*.67,x+side*reach,base-reach*.65);
+    ctx.quadraticCurveTo(x+side*reach*.73,base-reach*.03,x,base);
+    ctx.fill();
+  }
+
+  if(f.featured && isBee && !f.seen){
+    const aura = ctx.createRadialGradient(x,y,r*.20,x,y,r*2);
+    aura.addColorStop(0,'#b9fb903b');
+    aura.addColorStop(1,'#b9fb9000');
+    ctx.fillStyle = aura;
+    ctx.fillRect(x-r*2,y-r*2,r*4,r*4);
+  }
+  ctx.drawImage(flowerHead(f.plant,isBee,f.featured),x-r*2.4,y-r*2.4,r*4.8,r*4.8);
+  ctx.restore();
+}
 function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}resize();addEventListener('resize',resize);
-function project(x,y,z){let depth=z-travel;if(depth<.18)return null;let focal=Math.min(W*.8,H*1.35);return{x:W/2+(x-camX-mouseX*.52)*focal/(depth+3),y:H*.52+(y-camY-mouseY*.29)*focal/(depth+3),s:focal/(depth+3),depth}}
-function petal(x,y,dx,dy,r,col1,col2){ctx.save();ctx.translate(x,y);ctx.rotate(Math.atan2(dy,dx)+Math.PI/2);let g=ctx.createRadialGradient(0,-r*.1,r*.04,0,-r*.45,r*1.06);g.addColorStop(0,col1);g.addColorStop(1,col2);ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(-r*.63,-r*.18,-r*.67,-r*1.5,0,-r*1.62);ctx.bezierCurveTo(r*.67,-r*1.5,r*.63,-r*.18,0,0);ctx.fill();ctx.restore()}
-function flower(f,isBee,clip){const p=project(f.x,f.y+Math.sin(time*.7+f.phase)*.08,f.z);if(!p)return;let r=p.s*f.sz;if(r<.5||r>H*2)return;ctx.save(); if(clip){ctx.beginPath();ctx.rect(...clip);ctx.clip()};ctx.globalAlpha=Math.min(1,(p.depth)/8,.96)*(f.featured?1:.36);let y=p.y,x=p.x; // stem
-ctx.strokeStyle=isBee?'#427b80':'#407044';ctx.lineWidth=Math.max(.7,r*.07);ctx.beginPath();ctx.moveTo(x,y);ctx.bezierCurveTo(x-r*.2,y+r*1.4,x+r*.5,y+r*2,x,y+r*3);ctx.stroke();
-for(let k=0;k<f.petals;k++){let a=k*2*Math.PI/f.petals+f.phase*.07;let px=x+Math.sin(a)*r*.69,py=y-Math.cos(a)*r*.69;let lavender=f.col===0;let a1=isBee?(lavender?'#85b9fa':'#72d7e8'):(lavender?'#e3a8fa':'#ffea93');let a2=isBee?(lavender?'#4b3c9b':'#193b89'):(lavender?'#73518e':'#db8f55');if(!f.featured){a1=isBee?'#72768a':'#99949c';a2=isBee?'#34394a':'#57565b'}petal(px,py,Math.sin(a),-Math.cos(a),r*.7,a1,a2)}
-let core=ctx.createRadialGradient(x,y,0,x,y,r*.48);core.addColorStop(0,isBee?'#111d39':'#7c471a');core.addColorStop(.48,f.featured?(isBee?'#131c46':'#eebd44'):'#494c56');core.addColorStop(1,f.featured?(isBee?'#62eda4':'#e7bd55'):'#7c7d85');ctx.fillStyle=core;ctx.beginPath();ctx.arc(x,y,r*.4,0,Math.PI*2);ctx.fill();
-if(isBee&&f.featured){ctx.strokeStyle='#d4ff87';ctx.shadowColor='#83ffa8';ctx.shadowBlur=Math.min(25,r*.3);ctx.lineWidth=Math.max(.65,r*.045);for(let k=0;k<f.petals;k++){let a=k*2*Math.PI/f.petals+f.phase*.07;for(let j=0;j<3;j++){let a2=a+(j-1)*.19;ctx.beginPath();ctx.moveTo(x+Math.sin(a2)*r*.35,y-Math.cos(a2)*r*.35);ctx.quadraticCurveTo(x+Math.sin(a2)*r*.62,y-Math.cos(a2)*r*.62,x+Math.sin(a2)*r*.98,y-Math.cos(a2)*r*.98);ctx.stroke()}}ctx.shadowBlur=0;if(p.depth<20){ctx.strokeStyle=`rgba(255,225,120,${Math.max(0,(20-p.depth)/35)})`;ctx.lineWidth=1;ctx.beginPath();ctx.arc(x,y,r*1.9+Math.sin(time*3)*3,0,2*Math.PI);ctx.stroke()}}if(f.featured){ctx.globalCompositeOperation='screen';let aura=ctx.createRadialGradient(x,y,r*.32,x,y,r*2.05);aura.addColorStop(0,isBee?'#b9fb902a':'#ffe8a81c');aura.addColorStop(1,'#00000000');ctx.fillStyle=aura;ctx.beginPath();ctx.arc(x,y,r*2.05,0,Math.PI*2);ctx.fill()}ctx.restore()}
+const flight = {
+  x:0, y:0, vx:0, vy:0, vz:0, glide:0,
+  aimX:0, aimY:0, yaw:0, pitch:0, bank:0,
+  viewY:0, cosYaw:1, sinYaw:0, cosPitch:1, sinPitch:0, cosBank:1, sinBank:0
+};
+const clamp = (value,min,max) => Math.max(min,Math.min(max,value));
+const approach = (value,target,rate,dt) => target+(value-target)*Math.exp(-rate*dt);
+const axis = (positive,negative) => Number(positive.some(code=>held.has(code))) -
+  Number(negative.some(code=>held.has(code)));
+
+function updateFlight(dt){
+  const forward = axis(['KeyW','ArrowUp'],['KeyS','ArrowDown']);
+  const sideways = axis(['KeyD','ArrowRight'],['KeyA','ArrowLeft']);
+  const vertical = axis(['KeyE','PageUp'],['KeyQ','PageDown']);
+  const reducedMotion = motionPreference.matches;
+  const lastYaw = flight.yaw;
+  flight.yaw = approach(flight.yaw,flight.aimX*.36,10,dt);
+  flight.pitch = approach(flight.pitch,flight.aimY*.23,10,dt);
+  flight.cosYaw = Math.cos(flight.yaw);
+  flight.sinYaw = Math.sin(flight.yaw);
+  flight.cosPitch = Math.cos(flight.pitch);
+  flight.sinPitch = Math.sin(flight.pitch);
+
+  // Manual thrust follows the gaze. Autopilot stays on the garden route.
+  const thrust = forward*(forward<0 ? 3.8 : 7.2);
+  flight.vx = approach(flight.vx,sideways*4.2+thrust*flight.sinYaw,sideways || forward ? 8 : 6,dt);
+  flight.vy = approach(flight.vy,-vertical*3+thrust*flight.sinPitch,vertical || forward ? 8 : 6,dt);
+  const cruise = (auto && !forward ? 4.5 : thrust*flight.cosYaw*flight.cosPitch);
+  flight.vz = approach(flight.vz,cruise,forward || auto ? 7 : 5,dt);
+  flight.glide = approach(flight.glide,0,5,dt);
+
+  flight.x = clamp(flight.x+flight.vx*dt,-10,10);
+  flight.y = clamp(flight.y+flight.vy*dt,-3.5,2.5);
+  travel = clamp(travel+(flight.vz+flight.glide)*dt,0,maxTravel);
+  if(flight.x===-10 || flight.x===10) flight.vx=0;
+  if(flight.y===-3.5 || flight.y===2.5) flight.vy=0;
+  if(travel===0 || travel===maxTravel){
+    flight.vz=0;
+    flight.glide=0;
+  }
+
+  const turning = (flight.yaw-lastYaw)/dt;
+  const lean = clamp(-flight.vx*.025-turning*.055,-.15,.15);
+  flight.bank = approach(flight.bank,reducedMotion ? 0 : lean,8,dt);
+  flight.cosBank = Math.cos(flight.bank);
+  flight.sinBank = Math.sin(flight.bank);
+  // Keep the hover subtle so the reticle stays usable for nectar collection.
+  const bob = reducedMotion ? 0 : Math.sin(time*7)*(.016+Math.min(9,Math.abs(flight.vz))*.002);
+  flight.viewY = flight.y+bob;
+}
+
+function project(x,y,z){
+  const depth = z-travel;
+  if(depth<.18) return null;
+  const offsetX = x-flight.x;
+  const offsetY = y-flight.viewY;
+  const yawX = offsetX*flight.cosYaw-depth*flight.sinYaw;
+  const yawZ = offsetX*flight.sinYaw+depth*flight.cosYaw;
+  const pitchY = offsetY*flight.cosPitch-yawZ*flight.sinPitch;
+  const pitchZ = offsetY*flight.sinPitch+yawZ*flight.cosPitch;
+  if(pitchZ<.18) return null;
+  const scale = Math.min(W*.8,H*1.35)/(pitchZ+3);
+  return {
+    x:W/2+(yawX*flight.cosBank-pitchY*flight.sinBank)*scale,
+    y:H*.52+(yawX*flight.sinBank+pitchY*flight.cosBank)*scale,
+    s:scale, depth
+  };
+}
 function drawWorld(isBee,clip){ctx.save();if(clip){ctx.beginPath();ctx.rect(...clip);ctx.clip()};let sky=ctx.createLinearGradient(0,0,0,H);if(isBee){sky.addColorStop(0,'#070825');sky.addColorStop(.48,'#182653');sky.addColorStop(1,'#071a2b')}else{sky.addColorStop(0,'#2b2853');sky.addColorStop(.5,'#776d9f');sky.addColorStop(1,'#203b3f')}ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);let glow=ctx.createRadialGradient(W*.52,H*.51,0,W*.52,H*.51,W*.58);glow.addColorStop(0,isBee?'#5b8a9835':'#f5c88838');glow.addColorStop(1,'#00000000');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
 // distant trees silhouette & atmospheric hills
-for(let layer=0;layer<3;layer++){ctx.fillStyle=isBee?['#091a36','#0b1832','#071527'][layer]:['#303e4e','#233c3c','#1c322e'][layer];ctx.beginPath();ctx.moveTo(0,H);for(let x=0;x<=W+30;x+=20){let yy=H*(.57+layer*.07)+Math.sin(x*.007+layer*4+mouseX*.2)*17+Math.sin(x*.025+layer)*13;ctx.lineTo(x,yy)}ctx.lineTo(W,H);ctx.fill()}
+for(let layer=0;layer<3;layer++){ctx.fillStyle=isBee?['#091a36','#0b1832','#071527'][layer]:['#303e4e','#233c3c','#1c322e'][layer];ctx.beginPath();ctx.moveTo(0,H);for(let x=0;x<=W+30;x+=20){let yy=H*(.57+layer*.07-flight.pitch*.7)+(x-W/2)*flight.sinBank*.75+Math.sin(x*.007+layer*4+(flight.yaw*.6))*17+Math.sin(x*.025+layer)*13;ctx.lineTo(x,yy)}ctx.lineTo(W,H);ctx.fill()}
 // gently glowing stars / pollen
 for(let i=0;i<dust.length;i++){let d=dust[i],p=project(d.x,d.y,d.z);if(!p)continue;let alpha=Math.min(.75,.18+3/p.depth)*(isBee?1:.3);ctx.fillStyle=isBee?`rgba(255,221,130,${alpha})`:`rgba(240,245,240,${alpha})`;ctx.beginPath();ctx.arc(p.x,p.y,Math.min(4,p.s*d.s*.05),0,7);ctx.fill()}
-flowers.slice().sort((a,b)=>b.z-a.z).forEach(f=>flower(f,isBee,clip));
+flowers.forEach(f=>flower(f,isBee));
 if(isBee){ // stylised pollen pathways; an interpretation not biological light rays
 let nearby=flowers.filter(f=>f.featured&&f.z>travel+3&&f.z<travel+65).sort((a,b)=>a.z-b.z).slice(0,10);ctx.lineWidth=1.2;ctx.shadowColor='#ffd76d';ctx.shadowBlur=9;for(let i=0;i<nearby.length-1;i++){let a=project(nearby[i].x,nearby[i].y,nearby[i].z),b=project(nearby[i+1].x,nearby[i+1].y,nearby[i+1].z);if(!a||!b)continue;ctx.strokeStyle=`rgba(255,213,110,${.11+.16*Math.sin(time*1.8+i)**2})`;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.quadraticCurveTo((a.x+b.x)/2,H*.2+Math.sin(i*4)*60,b.x,b.y);ctx.stroke()}ctx.shadowBlur=0}
 ctx.restore()}
-function render(now){let dt=Math.min(.05,(now-prev)/1000||.016);prev=now;time+=dt;const lateral=5.2*dt;if(held.has('KeyA')||held.has('ArrowLeft'))targetCamX-=lateral;if(held.has('KeyD')||held.has('ArrowRight'))targetCamX+=lateral;if(held.has('KeyW')||held.has('PageUp'))targetCamY-=lateral*.68;if(held.has('KeyS')||held.has('PageDown'))targetCamY+=lateral*.68;targetCamX=Math.max(-10,Math.min(10,targetCamX));targetCamY=Math.max(-3.5,Math.min(3.5,targetCamY));camX+=(targetCamX-camX)*Math.min(1,dt*7);camY+=(targetCamY-camY)*Math.min(1,dt*7);if(auto)targetTravel+=dt*4;targetTravel=Math.min(maxTravel,Math.max(0,targetTravel));travel+=(targetTravel-travel)*Math.min(1,dt*5);ctx.clearRect(0,0,W,H);if(mode==='compare'){drawWorld(false,[0,0,W/2,H]);drawWorld(true,[W/2,0,W/2,H]);ctx.strokeStyle='#f9ebc8a6';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.font='11px Arial';ctx.fillStyle='#fff2c3';ctx.fillText('HUMAN',W*.25,100);ctx.fillText('BEE',W*.75,100)}else{drawWorld(mode==='bee')}
+function render(now){let dt=Math.min(.05,(now-prev)/1000||.016);prev=now;time+=dt;updateFlight(dt);ctx.clearRect(0,0,W,H);if(mode==='compare'){drawWorld(false,[0,0,W/2,H]);drawWorld(true,[W/2,0,W/2,H]);ctx.strokeStyle='#f9ebc8a6';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(W/2,0);ctx.lineTo(W/2,H);ctx.stroke();ctx.font='11px Arial';ctx.fillStyle='#fff2c3';ctx.fillText('HUMAN',W*.25,100);ctx.fillText('BEE',W*.75,100)}else{drawWorld(mode==='bee')}
 const percent=Math.round(100*travel/maxTravel);document.querySelector('#progressText').textContent=String(percent).padStart(2,'0')+'%';document.querySelector('#progressFill').style.width=percent+'%';requestAnimationFrame(render)}requestAnimationFrame(render);
 function setMode(v){mode=v;for(let id of ['bee','human','compare'])document.querySelector('#'+id).classList.toggle('active',id===v);document.querySelector('#modeLabel').textContent=v==='bee'?'BEE VISION · SIMULATION':v==='human'?'HUMAN VISION':'SPLIT PERCEPTION'}for(let id of ['bee','human','compare'])document.querySelector('#'+id).onclick=()=>setMode(id);
-function collect(){let fs=flowers.map(f=>({f,p:project(f.x,f.y,f.z)})).filter(v=>v.p&&v.p.depth<23&&v.p.depth>0);fs.sort((a,b)=>Math.hypot(a.p.x-W/2,a.p.y-H/2)-Math.hypot(b.p.x-W/2,b.p.y-H/2));if(fs.length&&!fs[0].f.seen&&Math.hypot(fs[0].p.x-W/2,fs[0].p.y-H/2)<Math.max(145,fs[0].p.s*fs[0].f.sz*2)){fs[0].f.seen=true;nectar++;document.querySelector('#nectarText').textContent='NECTAR COLLECTED: '+String(nectar).padStart(2,'0');let msg=document.querySelector('#message');msg.textContent='Nectar found · +1';msg.classList.add('show');clearTimeout(collect.t);collect.t=setTimeout(()=>msg.classList.remove('show'),1500)}else{let msg=document.querySelector('#message');msg.textContent='Move closer to a flower';msg.classList.add('show');clearTimeout(collect.t);collect.t=setTimeout(()=>msg.classList.remove('show'),1300)}}
-addEventListener('wheel',e=>{e.preventDefault();targetTravel+=e.deltaY*.035},{passive:false});addEventListener('mousemove',e=>{mouseX=(e.clientX/W-.5)*2;mouseY=(e.clientY/H-.5)*2});addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space','PageUp','PageDown'].includes(e.code))e.preventDefault();held.add(e.code);if(e.code==='Space'){e.preventDefault();collect()}if(e.key==='ArrowUp')targetTravel+=2;if(e.key==='ArrowDown')targetTravel-=2;if(e.key==='Digit1')setMode('bee');if(e.key==='Digit2')setMode('human');if(e.key==='Digit3')setMode('compare')});addEventListener('keyup',e=>held.delete(e.code));addEventListener('blur',()=>held.clear());let startY=null;addEventListener('touchstart',e=>{startY=e.touches[0].clientY},{passive:true});addEventListener('touchmove',e=>{if(startY!==null){let y=e.touches[0].clientY;targetTravel+=(startY-y)*.045;startY=y}},{passive:true});c.addEventListener('click',collect);document.querySelector('#fly').onclick=()=>{auto=!auto;document.querySelector('#fly').textContent=auto?'Ⅱ   Pause flight':'→   Fly forward'};document.querySelector('#reset').onclick=()=>{travel=0;targetTravel=0;camX=camY=targetCamX=targetCamY=0;nectar=0;flowers.forEach(f=>f.seen=false);document.querySelector('#nectarText').textContent='NECTAR COLLECTED: 00';auto=false;document.querySelector('#fly').textContent='→   Fly forward'};
+function collect(){let fs=flowers.filter(f=>!f.seen).map(f=>({f,p:project(f.x,f.y+Math.sin(time*.7+f.phase)*.08,f.z)})).filter(v=>v.p&&v.p.depth<23&&v.p.depth>0);fs.sort((a,b)=>Math.hypot(a.p.x-W/2,a.p.y-H*.52)-Math.hypot(b.p.x-W/2,b.p.y-H*.52));if(fs.length&&Math.hypot(fs[0].p.x-W/2,fs[0].p.y-H*.52)<Math.max(145,fs[0].p.s*fs[0].f.sz*2)){fs[0].f.seen=true;nectar++;document.querySelector('#nectarText').textContent='NECTAR COLLECTED: '+String(nectar).padStart(2,'0');let msg=document.querySelector('#message');msg.textContent=fs[0].f.plant.name+' · Nectar +1';msg.classList.add('show');clearTimeout(collect.t);collect.t=setTimeout(()=>msg.classList.remove('show'),1500)}else{let msg=document.querySelector('#message');msg.textContent='Move closer to a flower';msg.classList.add('show');clearTimeout(collect.t);collect.t=setTimeout(()=>msg.classList.remove('show'),1300)}}
+const flightKeys = new Set([
+  'KeyW','KeyA','KeyS','KeyD','KeyQ','KeyE',
+  'ArrowUp','ArrowDown','ArrowLeft','ArrowRight','PageUp','PageDown'
+]);
+
+function addGlide(amount){
+  flight.glide = clamp(flight.glide+amount,-23,23);
+}
+
+addEventListener('wheel',e=>{
+  e.preventDefault();
+  const pixels = e.deltaY*(e.deltaMode===1 ? 16 : e.deltaMode===2 ? H : 1);
+  addGlide(pixels*.10);
+},{passive:false});
+
+c.addEventListener('pointermove',e=>{
+  if(e.pointerType==='touch') return;
+  flight.aimX = clamp((e.clientX/W-.5)*2,-1,1);
+  flight.aimY = clamp((e.clientY/H-.52)*2,-1,1);
+});
+
+addEventListener('keydown',e=>{
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  if(flightKeys.has(e.code)){
+    e.preventDefault();
+    held.add(e.code);
+  }
+  if(e.code==='Space' && e.target?.tagName!=='BUTTON'){
+    e.preventDefault();
+    if(!e.repeat) collect();
+  }
+  const view = {Digit1:'bee',Digit2:'human',Digit3:'compare'}[e.code];
+  if(view) setMode(view);
+});
+addEventListener('keyup',e=>held.delete(e.code));
+addEventListener('blur',()=>held.clear());
+addEventListener('visibilitychange',()=>{if(document.hidden) held.clear();});
+
+let startY = null;
+let touchDistance = 0;
+let ignoreTouchClickUntil = 0;
+c.addEventListener('touchstart',e=>{
+  startY=e.touches[0].clientY;
+  touchDistance=0;
+},{passive:true});
+c.addEventListener('touchmove',e=>{
+  if(startY===null) return;
+  const y=e.touches[0].clientY;
+  touchDistance+=Math.abs(startY-y);
+  if(touchDistance>8) addGlide((startY-y)*.22);
+  startY=y;
+},{passive:true});
+function endTouch(){
+  if(touchDistance>8) ignoreTouchClickUntil=performance.now()+400;
+  startY=null;
+}
+c.addEventListener('touchend',endTouch,{passive:true});
+c.addEventListener('touchcancel',endTouch,{passive:true});
+c.addEventListener('click',()=>{
+  if(performance.now()>=ignoreTouchClickUntil) collect();
+});
+
+const flyButton=document.querySelector('#fly');
+flyButton.onclick=()=>{
+  auto=!auto;
+  flyButton.textContent=auto?'Ⅱ   Pause flight':'→   Fly forward';
+};
+document.querySelector('#reset').onclick=()=>{
+  travel=0;
+  Object.assign(flight,{
+    x:0,y:0,vx:0,vy:0,vz:0,glide:0,
+    aimX:0,aimY:0,yaw:0,pitch:0,bank:0,viewY:0
+  });
+  held.clear();
+  nectar=0;
+  flowers.forEach(f=>f.seen=false);
+  document.querySelector('#nectarText').textContent='NECTAR COLLECTED: 00';
+  auto=false;
+  clearTimeout(collect.t);
+  document.querySelector('#message').classList.remove('show');
+  flyButton.textContent='→   Fly forward';
+};
 })();
 </script></body></html>
