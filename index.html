@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>THROUGH THE BEE'S EYES — Floral scent and air pollution</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&display=swap');
-:root{color-scheme:dark;font-family:'DM Sans',Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:#080a1a;color:#f7f0d7;overflow:hidden}canvas{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:crosshair;touch-action:none}#veil{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,rgba(1,1,16,.65) 100%);mix-blend-mode:multiply}#grain{position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:28px 38px;gap:15px;z-index:3}small,.eyebrow{font-size:10px;letter-spacing:.21em;text-transform:uppercase;font-weight:600;color:#e9dca8}header .wordmark{font-family:Georgia,serif;font-size:17px;letter-spacing:.08em}header .right{display:flex;align-items:center;gap:18px;font-size:10px;letter-spacing:.13em;color:#e8ddc2}.pill{background:rgba(7,11,28,.38);border:1px solid rgba(250,236,181,.35);border-radius:99px;padding:10px 14px;backdrop-filter:blur(10px)}.panel{position:fixed;top:24%;left:5%;max-width:360px;z-index:2;pointer-events:none;text-shadow:0 2px 16px #08091a}.panel h1{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(40px,5vw,76px);line-height:.99;letter-spacing:-.045em;margin:16px 0}.panel h1 em{color:#ffe39c}.panel p{font-size:13px;line-height:1.85;color:rgba(255,247,223,.83);max-width:280px}.panel .line{width:48px;border-top:1px solid #f3cd77;margin:24px 0}.controls{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:4;width:205px;padding:20px;border:1px solid #b5a77155;border-radius:5px;background:#070a1a91;backdrop-filter:blur(16px)}.controls label{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#d6c99f;display:block;margin:0 0 12px}.controls button{appearance:none;display:block;width:100%;text-align:left;cursor:pointer;background:transparent;color:#e8ddc7;border:1px solid #c9bd8a44;padding:12px 13px;margin-bottom:9px;font:12px 'DM Sans',sans-serif;transition:.2s}.controls button:hover,.controls button.active{border-color:#f5d18b;background:#f4d78b21;color:#ffe9af}.controls .hint{font-size:11px;line-height:1.7;color:#c5bdaf;margin-top:14px}.controls .key{display:inline-block;border:1px solid #b5a77175;border-radius:3px;padding:0px 5px;font-size:10px}footer{position:fixed;bottom:26px;left:38px;right:38px;z-index:3;display:flex;align-items:end;justify-content:space-between;gap:20px}footer .status{font-size:10px;line-height:1.9;letter-spacing:.11em;text-transform:uppercase;color:#e6dbba}footer .meter{width:230px;height:2px;background:#e7d7a74a;margin-top:11px}footer .fill{height:100%;width:0%;background:#ffe397;box-shadow:0 0 10px #ffdf74}footer .note{font-size:11px;color:#e6dbba;max-width:260px;text-align:right;line-height:1.6}.reticle{position:fixed;left:50%;top:52%;transform:translate(-50%,-50%);width:30px;height:30px;border:1px solid #fff5c45e;border-radius:50%;pointer-events:none;z-index:2}.reticle:before,.reticle:after{content:'';position:absolute;background:#ffe7a7a6}.reticle:before{width:1px;height:44px;left:14px;top:-8px}.reticle:after{height:1px;width:44px;top:14px;left:-8px}.flash{position:fixed;left:50%;bottom:16%;transform:translateX(-50%);z-index:4;color:#ffe6a1;font-family:Georgia,serif;width:max-content;max-width:calc(100vw - 36px);text-align:center;font-size:clamp(15px,2.3vw,20px);font-style:italic;text-shadow:0 0 20px #ffce6f;opacity:0;pointer-events:none;transition:opacity .4s}.flash.show{opacity:1}.mobile{display:none}@media(max-width:750px){header{padding:18px}header .right{display:none}.panel{left:22px;top:17%;max-width:245px}.panel h1{font-size:38px}.panel p{font-size:11px}.controls{right:15px;top:auto;bottom:84px;transform:none;width:180px;padding:12px}.controls button{padding:8px;font-size:11px}.controls .hint{font-size:10px;margin-top:3px}footer{bottom:12px;left:18px;right:18px}.note{display:none}.reticle{opacity:.5}.mobile{display:block}}
+:root{color-scheme:dark;font-family:'DM Sans',Arial,sans-serif}*{box-sizing:border-box}body{margin:0;background:#080a1a;color:#f7f0d7;overflow:hidden}canvas{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:crosshair;touch-action:none}#veil{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 25%,rgba(1,1,16,.65) 100%);mix-blend-mode:multiply}#grain{position:fixed;inset:0;pointer-events:none;opacity:.14;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}header{position:fixed;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:28px 38px;gap:15px;z-index:3}small,.eyebrow{font-size:10px;letter-spacing:.21em;text-transform:uppercase;font-weight:600;color:#e9dca8}header .wordmark{font-family:Georgia,serif;font-size:17px;letter-spacing:.08em}header .right{display:flex;align-items:center;gap:18px;font-size:10px;letter-spacing:.13em;color:#e8ddc2}.pill{background:rgba(7,11,28,.38);border:1px solid rgba(250,236,181,.35);border-radius:99px;padding:10px 14px;backdrop-filter:blur(10px)}.panel{position:fixed;top:24%;left:5%;max-width:360px;z-index:2;pointer-events:none;text-shadow:0 2px 16px #08091a}.panel h1{font-family:'Playfair Display',Georgia,serif;font-weight:400;font-size:clamp(40px,5vw,76px);line-height:.99;letter-spacing:-.045em;margin:16px 0}.panel h1 em{color:#ffe39c}.panel p{font-size:13px;line-height:1.85;color:rgba(255,247,223,.83);max-width:280px}.panel .line{width:48px;border-top:1px solid #f3cd77;margin:24px 0}.controls{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:4;width:205px;padding:20px;border:1px solid #b5a77155;border-radius:5px;background:#070a1a91;backdrop-filter:blur(16px)}.controls label{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#d6c99f;display:block;margin:0 0 12px}.controls button{appearance:none;display:block;width:100%;text-align:left;cursor:pointer;background:transparent;color:#e8ddc7;border:1px solid #c9bd8a44;padding:12px 13px;margin-bottom:9px;font:12px 'DM Sans',sans-serif;transition:.2s}.controls button:hover,.controls button.active{border-color:#f5d18b;background:#f4d78b21;color:#ffe9af}.controls .hint{font-size:11px;line-height:1.7;color:#c5bdaf;margin-top:14px}.controls .key{display:inline-block;border:1px solid #b5a77175;border-radius:3px;padding:0px 5px;font-size:10px}footer{position:fixed;bottom:26px;left:38px;right:38px;z-index:3;display:flex;align-items:end;justify-content:space-between;gap:20px}footer .status{font-size:10px;line-height:1.9;letter-spacing:.11em;text-transform:uppercase;color:#e6dbba}footer .meter{width:230px;height:2px;background:#e7d7a74a;margin-top:11px}footer .fill{height:100%;width:0%;background:#ffe397;box-shadow:0 0 10px #ffdf74}footer .note{font-size:11px;color:#e6dbba;max-width:260px;text-align:right;line-height:1.6}.reticle{position:fixed;left:50%;top:52%;transform:translate(-50%,-50%);width:30px;height:30px;border:5px solid #fff5c45e;border-radius:50%;pointer-events:none;z-index:2}.reticle:before,.reticle:after{content:'';position:absolute;background:#ffe7a7a6}.reticle:before{width:5px;height:44px;left:50%;top:50%;transform:translate(-50%,-50%)}.reticle:after{height:5px;width:44px;left:50%;top:50%;transform:translate(-50%,-50%)}.flash{position:fixed;left:50%;bottom:16%;transform:translateX(-50%);z-index:4;color:#ffe6a1;font-family:Georgia,serif;width:max-content;max-width:calc(100vw - 36px);text-align:center;font-size:clamp(15px,2.3vw,20px);font-style:italic;text-shadow:0 0 20px #ffce6f;opacity:0;pointer-events:none;transition:opacity .4s}.flash.show{opacity:1}.mobile{display:none}@media(max-width:750px){header{padding:18px}header .right{display:none}.panel{left:22px;top:17%;max-width:245px}.panel h1{font-size:38px}.panel p{font-size:11px}.controls{right:15px;top:auto;bottom:84px;transform:none;width:180px;padding:12px}.controls button{padding:8px;font-size:11px}.controls .hint{font-size:10px;margin-top:3px}footer{bottom:12px;left:18px;right:18px}.note{display:none}.reticle{opacity:.5}.mobile{display:block}}
 .controls{max-height:calc(100dvh - 32px);overflow-y:auto}
 .controls #pollution{display:block;width:100%;height:9px;margin:6px 0;appearance:none}.controls #pollution::-webkit-meter-bar{background:#ffffff24;border:0;border-radius:4px}.controls #pollution::-webkit-meter-optimum-value{background:#ecd076;border-radius:4px}.controls #pollution::-moz-meter-bar{background:#ecd076;border-radius:4px}.controls #pollutionValue{float:right;color:#ecd076}.pollution-scale{display:flex;justify-content:space-between;font-size:9px;color:#eee5d5}
 .controls .scent-note{font-size:11px;line-height:1.4;margin:8px 0 0}.scent-note a{color:inherit}
@@ -693,14 +693,20 @@ function signalStrength(distance,pollution){
   return (1-pollution*.79)*(.34+.66*proximity);
 }
 
-function markFlower(flower,shoot,isBee,x,y,petalRadius){
+function markFlower(flower,shoot,isBee,x,y,petalRadius,plantRadius=petalRadius*3){
   if(!isBee || shoot!==flower.shoots[0] || flower.seen || !targets.includes(flower)) return;
   const distance=distanceToBloom(flower);
   if(distance>15) return;
   const strength=signalStrength(distance,scentPollution);
   const fragmentation=Math.max(0,(scentPollution-.18)/.82);
   const cycle=motionPreference.matches ? .1 : (time*.48+flower.phase/TAU)%1;
-  const radius=Math.max(2,petalRadius)*1.28*(1-scentPollution*.30);
+  const compactRadius=Math.max(2,petalRadius)*1.28*(1-scentPollution*.30);
+  const elapsed=shoot.signalTime===undefined ? 0 : Math.max(0,time-shoot.signalTime);
+  const expansion=scentPollution<.40 ? 1 : 0;
+  shoot.signalExpansion=shoot.signalExpansion===undefined ? expansion :
+    approach(shoot.signalExpansion,expansion,3.5,elapsed);
+  shoot.signalTime=time;
+  const radius=compactRadius+(Math.max(compactRadius,plantRadius*1.55)-compactRadius)*shoot.signalExpansion;
   ctx.save();
   ctx.strokeStyle='#ffe093';
   ctx.lineWidth=1+strength*1.45;
@@ -748,7 +754,7 @@ function drawTargetGuide(){
   fade.addColorStop(1,'#ffe3a064');
   ctx.strokeStyle=fade;
   ctx.globalAlpha=.48-scentPollution*.16;
-  ctx.lineWidth=1.25;
+  ctx.lineWidth=4;
   ctx.setLineDash([4,6]);
   ctx.beginPath();
   ctx.moveTo(fromX,fromY);
@@ -758,13 +764,17 @@ function drawTargetGuide(){
 }
 
 function drawHaze(){
-  if(smokeHaze<=.002) return;
+  const level=clamp((scentPollution-.72)/.28,0,1);
+  const fog=level*level*(3-2*level);
+  if(fog<=0) return;
+  ctx.save();
   const mist=ctx.createLinearGradient(0,0,0,H);
-  mist.addColorStop(0,'rgba(105,88,91,'+smokeHaze*.18+')');
-  mist.addColorStop(clamp(.55-flight.pitch*.7,.28,.77),'rgba(148,122,103,'+smokeHaze*.48+')');
-  mist.addColorStop(1,'rgba(105,77,70,'+smokeHaze*.14+')');
+  mist.addColorStop(0,'rgba(179,183,199,'+fog*.035+')');
+  mist.addColorStop(.55,'rgba(187,187,203,'+fog*.14+')');
+  mist.addColorStop(1,'rgba(168,174,190,'+fog*.045+')');
   ctx.fillStyle=mist;
   ctx.fillRect(0,0,W,H);
+  ctx.restore();
 }
 
 const distantFoliage=new Image();
