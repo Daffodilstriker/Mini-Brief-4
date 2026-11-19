@@ -29,8 +29,8 @@ footer .status,footer .note{text-shadow:0 1px 4px #212d1c,0 1px 8px #212d1c}
 <div id="gameRules" hidden>
 <h2>How to play</h2>
 <ol>
-  <li>Find the <strong>8 flowers</strong> with golden rings. A faint dashed line points toward the nearest target. Use the mouse to look and WASD to fly.</li>
-  <li>Fly close, aim at the bloom and press <strong>Space</strong> or tap to collect pollen.</li>
+  <li>Find the <strong>8 flowers</strong> with golden rings. A faint dashed line points toward the nearest target. Click the garden to capture your mouse, then look freely in a full 360° circle. Press Esc to release the mouse. Use WASD to fly.</li>
+  <li>Fly close, aim at the bloom and press <strong>Space</strong> or tap to collect pollen (on desktop, press Space while in mouse-look mode).</li>
   <li>Pollution fades the rings. The signal brightens as you approach a target.</li>
 </ol>
 <button id="beginFlight" type="button">Begin flight</button>
@@ -528,8 +528,8 @@ function drawShoot(f,shoot,isBee){
   ctx.restore();
 }
 function resize(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}resize();addEventListener('resize',resize);
-const yawLimit=110*Math.PI/180, pitchLimit=38*Math.PI/180;
-const startPose = {x:-1.05,y:.92,viewX:-1.05,viewY:.92,aimX:-.32/yawLimit,aimY:-.10/pitchLimit,yaw:-.32,pitch:-.10};
+const pitchLimit=75*Math.PI/180; // Unrestricted yaw; natural pitch cap avoids flipping.
+const startPose = {x:-1.05,y:.92,viewX:-1.05,viewY:.92,aimYaw:-.32,aimPitch:-.10,yaw:-.32,pitch:-.10};
 const openingOrientation={cosYaw:Math.cos(startPose.yaw),sinYaw:Math.sin(startPose.yaw),
   cosPitch:Math.cos(startPose.pitch),sinPitch:Math.sin(startPose.pitch),cosBank:1,sinBank:0};
 const flight = {
@@ -562,8 +562,8 @@ function updateFlight(dt){
   const vertical = axis(['KeyE','PageUp'],['KeyQ','PageDown']);
   const reducedMotion = motionPreference.matches;
   const lastYaw = flight.yaw;
-  flight.yaw = approach(flight.yaw,flight.aimX*yawLimit,10,dt);
-  flight.pitch = approach(flight.pitch,flight.aimY*pitchLimit,10,dt);
+  flight.yaw = approach(flight.yaw,flight.aimYaw,18,dt);
+  flight.pitch = approach(flight.pitch,flight.aimPitch,18,dt);
   flight.cosYaw = Math.cos(flight.yaw);
   flight.sinYaw = Math.sin(flight.yaw);
   flight.cosPitch = Math.cos(flight.pitch);
@@ -777,7 +777,7 @@ function drawBackdrop(isBee){
   const magnification=Math.max(W/distantFoliage.naturalWidth,H/distantFoliage.naturalHeight)*1.23;
   const width=distantFoliage.naturalWidth*magnification;
   const height=distantFoliage.naturalHeight*magnification;
-  const x=(W-width)*(.5+.42*flight.yaw/yawLimit)+(flight.x-flight.viewX)*30;
+  const x=(W-width)*(.5+.42*Math.sin(flight.yaw))+(flight.x-flight.viewX)*30;
   const y=(H-height)*(.5+.36*flight.pitch/pitchLimit);
   ctx.save();
   if(!isBee) ctx.filter='hue-rotate(-125deg) saturate(.55) brightness(.83)';
@@ -853,11 +853,35 @@ addEventListener('wheel',e=>{
   addGlide(pixels*.018);
 },{passive:false});
 
-c.addEventListener('pointermove',e=>{
-  if(e.pointerType==='touch') return;
-  flight.aimX = clamp((e.clientX/W-.5)*2,-1,1);
-  flight.aimY = clamp((e.clientY/H-.52)*2,-1,1);
+// 360-degree camera: mouse *deltas*, not mouse position, so yaw has no end stop.
+// Click the canvas to capture the mouse; Escape releases it for UI controls.
+const mouseSensitivity=.0027;
+let dragLooking=false, lastPointerX=0, lastPointerY=0;
+function turnCamera(dx,dy){
+  flight.aimYaw += dx*mouseSensitivity;
+  flight.aimPitch = clamp(flight.aimPitch+dy*mouseSensitivity,-pitchLimit,pitchLimit);
+}
+c.addEventListener('pointerdown',e=>{
+  if(!intro.hidden || e.pointerType==='touch') return;
+  if(e.button!==0) return;
+  if(document.pointerLockElement!==c && c.requestPointerLock){
+    const lock=c.requestPointerLock();
+    if(lock && typeof lock.catch==='function') lock.catch(()=>{});
+  }
+  dragLooking=true;
+  lastPointerX=e.clientX; lastPointerY=e.clientY;
 });
+document.addEventListener('pointermove',e=>{
+  if(!intro.hidden || e.pointerType==='touch') return;
+  if(document.pointerLockElement===c){
+    turnCamera(e.movementX||0,e.movementY||0);
+  } else if(dragLooking && (e.buttons&1)){
+    turnCamera(e.clientX-lastPointerX,e.clientY-lastPointerY);
+    lastPointerX=e.clientX;lastPointerY=e.clientY;
+  }
+});
+document.addEventListener('pointerup',()=>{dragLooking=false;});
+document.addEventListener('pointerlockchange',()=>{dragLooking=false;});
 
 addEventListener('keydown',e=>{
   if(e.metaKey || e.ctrlKey || e.altKey || e.target?.tagName==='SELECT') return;
@@ -896,8 +920,10 @@ function endTouch(){
 }
 c.addEventListener('touchend',endTouch,{passive:true});
 c.addEventListener('touchcancel',endTouch,{passive:true});
-c.addEventListener('click',()=>{
-  if(performance.now()>=ignoreTouchClickUntil) collect();
+c.addEventListener('click',e=>{
+  if(performance.now()<ignoreTouchClickUntil) return;
+  // While looking around, use Space to collect; clicking the canvas enters mouse-look.
+  if(e.detail===0) collect();
 });
 
 const flyButton=document.querySelector('#fly');
@@ -907,6 +933,8 @@ flyButton.onclick=()=>{
   flyButton.textContent=auto?'Ⅱ   Pause flight':'→   Fly forward';
 };
 document.querySelector('#reset').onclick=()=>{
+  if(document.pointerLockElement===c && document.exitPointerLock) document.exitPointerLock();
+  dragLooking=false;
   travel=startTravel;
   intro.hidden=false;
   gameRules.hidden=true;
