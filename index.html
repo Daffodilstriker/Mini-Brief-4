@@ -22,8 +22,6 @@ footer .note a{color:inherit}
 .panel{color:#fcf2df;text-shadow:0 1px 6px #12162e,0 1px 18px #12162e}
 .panel h1 em{color:#d6bce9}.panel p{color:#f5e9dc}.panel .eyebrow{color:#dfcfed}
 footer .status,footer .note{text-shadow:0 1px 4px #212d1c,0 1px 8px #212d1c}
-
-.completion{position:fixed;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);width:min(340px,85vw);padding:26px;background:#19152eef;border:1px solid #e8cf8a88;border-radius:12px;text-align:center;color:#fff1cc}.completion[hidden]{display:none}.completion h2{margin:0 0 12px}.completion button{padding:11px 18px;background:#eed28c;color:#242033;border:0;border-radius:5px;cursor:pointer}
 </style></head>
 <body><canvas id="scene" aria-label="Interactive bee first-person flight simulation"></canvas><div id="grain"></div>
 <section id="intro" class="panel play-intro" aria-labelledby="introTitle">
@@ -41,7 +39,6 @@ footer .status,footer .note{text-shadow:0 1px 4px #212d1c,0 1px 8px #212d1c}
 </section>
 <section class="controls"><label>Perception mode</label><button id="bee" class="active">✦ &nbsp; Bee vision</button><button id="human">◯ &nbsp; Human vision</button><button id="compare">◐ &nbsp; Split comparison</button><label for="pollution" class="air-label">Pollution level <span id="pollutionValue"></span></label><meter id="pollution" min="0" max="100" value="0" aria-label="Simulated pollution level"></meter><div class="pollution-scale"><span>Clean air</span><span>Moderate</span><span>Polluted</span></div><p class="scent-note"><span id="scentStatus">Floral scent ripples are continuous.</span> <a href="https://doi.org/10.1038/s43247-026-03351-z" target="_blank" rel="noopener noreferrer">Study</a> · Conceptual scale, not measured concentrations</p><label style="margin-top:17px">Interaction</label><button id="fly">→ &nbsp; Start flight</button><button id="reset">↺ &nbsp; Restart journey</button><div class="hint"><span class="mobile">Swipe to fly · Tap to collect<br></span>Move mouse to steer · Scroll to glide<br><span class="key">W S</span> forward / back<br><span class="key">A D</span> strafe · <span class="key">Q E</span> descend / rise<br><span class="key">SPACE</span> collect pollen<br><span class="key">1</span> / <span class="key">2</span> / <span class="key">3</span> change view</div></section>
 <div class="reticle"></div><div class="flash" id="message" role="status">Pollen collected · +1</div><footer><div class="status">Flight progress <span id="progressText">00%</span><div class="meter"><div class="fill" id="progressFill"></div></div><span id="nectarText">POLLEN COLLECTED: 0 / 8</span></div><div class="note">Smoke haze reduces UV cues in this illustrative model. Stem and leaf colours are illustrative. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5105132/">Field study on smoke and UV</a>. Floral false colours for the four new species follow <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12477309/">Lunau et al., Fig. 1</a>.</div></footer>
-<section id="completion" class="completion" hidden role="dialog" aria-modal="true" aria-labelledby="completeTitle"><h2 id="completeTitle">All eight flowers collected!</h2><p>Pollen collected · 8 / 8</p><button id="playAgain" type="button">Experience again</button></section>
 <script>
 (() => {
 const c=document.querySelector('#scene'),ctx=c.getContext('2d',{alpha:false});const startTravel=8.46;let W=innerWidth,H=innerHeight,dpr=1,time=0,travel=startTravel,mode='bee',nectar=0,auto=false,prev=0;const maxTravel=148;const nearPlane=.08;const groundY=1.38;const lowestFlightY=groundY-.32;let flowers=[],dust=[];const motionPreference=matchMedia('(prefers-reduced-motion: reduce)');const held=new Set();
@@ -520,8 +517,7 @@ function drawShoot(f,shoot,isBee){
     const height = stem/(1-anchorY);
     const width = height*(fullImage.naturalWidth || fullImage.width)/(fullImage.naturalHeight || fullImage.height);
     ctx.drawImage(fullImage,x-width*anchorX,y-height*anchorY,width,height);
-    markFlower(f,shoot,isBee,x,y,height*Math.min(.11,width/height*.13),
-      Math.hypot(width*Math.max(anchorX,1-anchorX),height*Math.max(anchorY,1-anchorY)));
+    markFlower(f,shoot,isBee,x,y,height*Math.min(.11,width/height*.13));
     ctx.restore();
     return;
   }
@@ -560,7 +556,6 @@ beginFlight.onclick=()=>{
 };
 
 function updateFlight(dt){
-  if(!document.querySelector('#completion').hidden) return;
   if(!intro.hidden) return;
   const forward = axis(['KeyW','ArrowUp'],['KeyS','ArrowDown']);
   const sideways = axis(['KeyD','ArrowRight'],['KeyA','ArrowLeft']);
@@ -605,13 +600,13 @@ function updateFlight(dt){
   const speed=Math.hypot(flight.vx,flight.vy,flight.vz+flight.glide);
   flight.motionAmount=approach(flight.motionAmount,clamp(speed/2.4,0,1),5,dt);
   const motion=reducedMotion ? 0 : flight.motionAmount;
-  const lean=clamp(-strafe*.07-turning*.046+(Math.sin(time*4.3)*.029+Math.sin(time*7.9+1.2)*.014)*motion,-.18,.18);
+  const lean=clamp(-strafe*.07-turning*.046+Math.sin(time*6.2)*motion*.019,-.18,.18);
   flight.bank=approach(flight.bank,reducedMotion ? 0 : lean,8,dt);
   flight.cosBank=Math.cos(flight.bank);
   flight.sinBank=Math.sin(flight.bank);
-  const hover=reducedMotion ? 0 : Math.sin(time*5.6)*.014+Math.sin(time*2.1+.8)*.009;
-  flight.viewX=flight.x+(Math.sin(time*4.7)*.060+Math.sin(time*7.3+.9)*.025)*motion;
-  flight.viewY=flight.y+hover+(Math.sin(time*6.1)*.042+Math.sin(time*3.4+1.7)*.019)*motion;
+  const hover=reducedMotion ? 0 : Math.sin(time*5.6)*.013;
+  flight.viewX=flight.x+Math.sin(time*5.2)*motion*.045;
+  flight.viewY=flight.y+hover+Math.sin(time*8.7)*motion*.031;
 
 }
 
@@ -698,27 +693,20 @@ function signalStrength(distance,pollution){
   return (1-pollution*.79)*(.34+.66*proximity);
 }
 
-function markFlower(flower,shoot,isBee,x,y,petalRadius,plantRadius=petalRadius*3){
+function markFlower(flower,shoot,isBee,x,y,petalRadius){
   if(!isBee || shoot!==flower.shoots[0] || flower.seen || !targets.includes(flower)) return;
   const distance=distanceToBloom(flower);
   if(distance>15) return;
   const strength=signalStrength(distance,scentPollution);
   const fragmentation=Math.max(0,(scentPollution-.18)/.82);
   const cycle=motionPreference.matches ? .1 : (time*.48+flower.phase/TAU)%1;
-  const compactRadius=Math.max(2,petalRadius)*.96*(1-scentPollution*.30);
-  const elapsed=shoot.signalTime===undefined ? 0 : Math.max(0,time-shoot.signalTime);
-  const expansionTarget=scentPollution<.40 ? 1 : 0;
-  shoot.signalExpansion=shoot.signalExpansion===undefined ? expansionTarget :
-    approach(shoot.signalExpansion,expansionTarget,3.5,elapsed);
-  shoot.signalTime=time;
-  const expandedRadius=Math.max(compactRadius,plantRadius*1.55);
-  const radius=compactRadius+(expandedRadius-compactRadius)*shoot.signalExpansion;
+  const radius=Math.max(2,petalRadius)*1.28*(1-scentPollution*.30);
   ctx.save();
   ctx.strokeStyle='#ffe093';
   ctx.lineWidth=1+strength*1.45;
   const dash=Math.max(1,radius*.25);
   if(fragmentation>0) ctx.setLineDash([dash*(1-fragmentation*.8),dash*fragmentation]);
-  const ringCount=4;
+  const ringCount=7;
   for(let ring=0;ring<ringCount;ring++){
     const progress=(cycle+ring/ringCount)%1;
     ctx.globalAlpha=strength*(1-progress*.68);
@@ -769,56 +757,14 @@ function drawTargetGuide(){
   ctx.restore();
 }
 
-const pollutionNoiseFrames=Array.from({length:4},(_,frame)=>{
-  const tile=document.createElement('canvas');
-  tile.width=256;
-  tile.height=144;
-  const ink=tile.getContext('2d');
-  for(let y=0;y<144;y++){
-    for(let x=0;x<256;x++){
-      const value=Math.floor(rnd(frame*50000+y*256+x)*256);
-      ink.fillStyle='rgb('+value+','+value+','+value+')';
-      ink.fillRect(x,y,1,1);
-    }
-  }
-  return tile;
-});
-
-function fogAmount(){
-  const level=clamp((scentPollution-.72)/.28,0,1);
-  return level*level*(3-2*level);
-}
-
-function drawPollutionBackground(){
-  ctx.save();
-  ctx.globalAlpha=.015+scentPollution*scentPollution*.22;
-  ctx.imageSmoothingEnabled=false;
-  const frame=motionPreference.matches ? 0 : Math.floor(time*9)%pollutionNoiseFrames.length;
-  ctx.drawImage(pollutionNoiseFrames[frame],0,0,W,H);
-  ctx.restore();
-  const fog=fogAmount();
-  if(fog<=0) return;
-  ctx.save();
-  const veil=ctx.createLinearGradient(0,0,0,H);
-  veil.addColorStop(0,'rgba(175,179,194,'+fog*.08+')');
-  veil.addColorStop(.55,'rgba(186,185,199,'+fog*.23+')');
-  veil.addColorStop(1,'rgba(157,163,179,'+fog*.10+')');
-  ctx.fillStyle=veil;
-  ctx.fillRect(0,0,W,H);
-  ctx.restore();
-}
-
 function drawHaze(){
-  const fog=fogAmount();
-  if(fog<=0) return;
-  ctx.save();
-  const veil=ctx.createLinearGradient(0,0,0,H);
-  veil.addColorStop(0,'rgba(183,187,201,'+fog*.02+')');
-  veil.addColorStop(.55,'rgba(183,187,201,'+fog*.075+')');
-  veil.addColorStop(1,'rgba(183,187,201,'+fog*.025+')');
-  ctx.fillStyle=veil;
+  if(smokeHaze<=.002) return;
+  const mist=ctx.createLinearGradient(0,0,0,H);
+  mist.addColorStop(0,'rgba(105,88,91,'+smokeHaze*.18+')');
+  mist.addColorStop(clamp(.55-flight.pitch*.7,.28,.77),'rgba(148,122,103,'+smokeHaze*.48+')');
+  mist.addColorStop(1,'rgba(105,77,70,'+smokeHaze*.14+')');
+  ctx.fillStyle=mist;
   ctx.fillRect(0,0,W,H);
-  ctx.restore();
 }
 
 const distantFoliage=new Image();
@@ -848,7 +794,6 @@ function drawWorld(isBee,clip){
   }
   drawBackdrop(isBee);
   drawDryGround(isBee);
-  drawPollutionBackground();
 // Dust and pollen in the dry air
 for(let i=0;i<dust.length;i++){let d=dust[i],p=project(d.x,d.y,d.z);if(!p)continue;let alpha=Math.min(.75,.18+3/p.depth)*(isBee?1:.3);ctx.fillStyle=isBee?`rgba(255,221,130,${alpha})`:`rgba(240,245,240,${alpha})`;ctx.beginPath();ctx.arc(p.x,p.y,Math.min(4,p.s*d.s*.05),0,7);ctx.fill()}
 visibleFlowers.forEach(({f})=>flower(f,isBee));
@@ -867,26 +812,20 @@ ctx.clearRect(0,0,W,H);if(mode==='compare'){drawWorld(false,[0,0,W/2,H]);drawWor
 const percent=Math.round(100*travel/maxTravel);document.querySelector('#progressText').textContent=String(percent).padStart(2,'0')+'%';document.querySelector('#progressFill').style.width=percent+'%';requestAnimationFrame(render)}requestAnimationFrame(render);
 function setMode(v){mode=v;for(let id of ['bee','human','compare'])document.querySelector('#'+id).classList.toggle('active',id===v)}for(let id of ['bee','human','compare'])document.querySelector('#'+id).onclick=()=>setMode(id);
 function collect(){
-  if(!intro.hidden || !document.querySelector('#completion').hidden) return;
+  if(!intro.hidden) return;
   const msg=document.querySelector('#message');
-  const nearest=targets.filter(f=>!f.seen && distanceToBloom(f)<=2.2)
+  const nearest=targets.filter(f=>!f.seen && distanceToBloom(f)<=1.35)
     .map(f=>({f,p:shootTip(f,f.shoots[0])}))
     .filter(({p})=>p && p.x>=0 && p.x<=W && p.y>=0 && p.y<=H)
-    .map(({f,p})=>({f,aim:Math.hypot(p.x-W/2,p.y-H*.52),radius:Math.max(Math.min(W,H)*.20,Math.min(Math.min(W,H)*.34,p.s*f.sz*.5))}))
+    .map(({f,p})=>({f,aim:Math.hypot(p.x-W/2,p.y-H*.52)}))
     .sort((a,b)=>a.aim-b.aim)[0];
-  if(nearest && nearest.aim<nearest.radius){
+  if(nearest && nearest.aim<Math.min(W,H)*.18){
     nearest.f.seen=true;
     nectar++;
     document.querySelector('#nectarText').textContent='POLLEN COLLECTED: '+nectar+' / '+targetCount;
     msg.textContent=nectar===targetCount ? 'All eight flowers collected!' : nearest.f.plant.name+' · Pollen +1';
     if(nectar===targetCount){
       auto=false;
-      held.clear();
-      Object.assign(flight,{vx:0,vy:0,vz:0,glide:0});
-      const completion=document.querySelector('#completion');
-      completion.hidden=false;
-      if(document.pointerLockElement===c && document.exitPointerLock) document.exitPointerLock();
-      document.querySelector('#playAgain').focus();
       flyButton.textContent='→   Fly forward';
     }
   }else{
@@ -950,7 +889,7 @@ addEventListener('keydown',e=>{
     e.preventDefault();
     held.add(e.code);
   }
-  if(e.code==='Space' && intro.hidden && document.querySelector('#completion').hidden){
+  if(e.code==='Space' && e.target?.tagName!=='BUTTON'){
     e.preventDefault();
     if(!e.repeat) collect();
   }
@@ -997,7 +936,6 @@ document.querySelector('#reset').onclick=()=>{
   if(document.pointerLockElement===c && document.exitPointerLock) document.exitPointerLock();
   dragLooking=false;
   travel=startTravel;
-  document.querySelector('#completion').hidden=true;
   intro.hidden=false;
   gameRules.hidden=true;
   startGame.hidden=false;
@@ -1012,6 +950,5 @@ document.querySelector('#reset').onclick=()=>{
   document.querySelector('#message').classList.remove('show');
   flyButton.textContent='→   Fly forward';
 };
-document.querySelector('#playAgain').onclick=()=>{document.querySelector('#reset').onclick();};
 })();
 </script></body></html>
