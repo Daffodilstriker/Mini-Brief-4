@@ -764,7 +764,7 @@ function drawTargetGuide(){
 }
 
 function drawHaze(){
-  const level=clamp((scentPollution-.72)/.28,0,1);
+  const level=clamp((scentPollution-.60)/.40,0,1);
   const fog=level*level*(3-2*level);
   if(fog<=0) return;
   ctx.save();
